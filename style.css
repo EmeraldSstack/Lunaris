@@ -1,80 +1,134 @@
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f0f0ff;
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><circle cx="12" cy="12" r="8" stroke="white" stroke-width="2" fill="black" /></svg>') 12 12, auto;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="32" width="32"><circle cx="16" cy="16" r="8" stroke="white" stroke-width="2" fill="black"/></svg>') 16 16, auto;
+}
+
+body {
+  background: linear-gradient(135deg, #4b0082, #1e1e2f);
+  color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#desktop {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#taskbar {
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#dock {
+  display: flex;
+  gap: 20px;
+}
+
+.dock-icon {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-radius: 16px;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+.dock-icon:hover {
+  transform: scale(1.1);
+}
+
+#clock {
+  font-weight: bold;
+}
+
+#app-window {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.3s ease;
+}
+
+#app-frame {
+  flex: 1;
+  border: none;
+  border-radius: 16px;
+  margin: 20px;
+  background: white;
+}
+
+#close-app {
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  background: #ff4b4b;
+  color: white;
+  border: none;
+  font-size: 24px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+#terminal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #111;
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+#terminal .header {
+  color: #00ffcc;
+  margin-bottom: 5px;
+}
+
+#terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  font-family: monospace;
+  margin-bottom: 5px;
+}
+
+#terminal-input {
+  padding: 5px;
+  font-family: monospace;
+  background: black;
+  color: lime;
+  border: none;
+  outline: none;
 }
 
 .hidden {
   display: none;
 }
 
-.fade-in {
-  animation: fadeIn 2s ease-in-out forwards;
-}
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-#boot-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #6a0dad;
-  color: white;
-}
-
-#desktop {
-  height: 100vh;
-  background: linear-gradient(to bottom right, #bfa3ff, #e6ddff);
-}
-
-#taskbar {
-  height: 40px;
-  background-color: #6a0dad;
-  color: white;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  font-weight: bold;
-}
-
-#terminal {
-  position: absolute;
-  top: 60px;
-  left: 60px;
-  width: 400px;
-  background: black;
-  color: white;
-  border: 2px solid white;
-  border-radius: 8px;
-  font-family: monospace;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.terminal-header {
-  background: #222;
-  padding: 8px;
-  font-weight: bold;
-}
-
-.terminal-body {
-  padding: 10px;
-  height: 200px;
-  overflow-y: auto;
-}
-
-#terminal-input {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background: #111;
-  color: white;
-  outline: none;
-  font-family: monospace;
 }
