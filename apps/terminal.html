@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shelly Terminal</title>
+  <style>
+    body {
+      margin: 0; padding: 10px;
+      background: black;
+      color: lime;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    #output {
+      flex: 1;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      margin-bottom: 5px;
+    }
+    #input {
+      border: none;
+      outline: none;
+      background: black;
+      color: lime;
+      font-family: monospace;
+      font-size: 16px;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="output"></div>
+  <input id="input" autofocus autocomplete="off" placeholder="Type command here" />
+  <script>
+    const output = document.getElementById("output");
+    const input = document.getElementById("input");
 
+    function print(text) {
+      output.innerText += text + "\n";
+      output.scrollTop = output.scrollHeight;
+    }
+
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        const cmd = input.value.trim();
+        print(`> ${cmd}`);
+        input.value = "";
+
+        // Use the global shelly instance in Lunaris OS
+        try {
+          const result = window.parent.lunarisShelly.runCommand(cmd);
+          if (result) print(result);
+        } catch (err) {
+          print("Error: Shell not available");
+        }
+      }
+    });
+
+    print("Welcome to Shelly Terminal!\nType 'help' for commands.");
+  </script>
+</body>
+</html>
