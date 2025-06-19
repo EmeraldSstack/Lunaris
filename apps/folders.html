@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Folders - Lunaris OS</title>
+<style>
+  body, html {
+    margin: 0; padding: 10px;
+    font-family: 'Segoe UI', sans-serif;
+    background: #fff;
+    color: #333;
+    height: 100%;
+    display: flex; flex-direction: column;
+  }
+  #folders-list {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  button {
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    background: #6200ee;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  li {
+    padding: 5px 0;
+    cursor: pointer;
+  }
+  li:hover {
+    background: #eee;
+  }
+  #folder-contents {
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <button id="create-folder">+ New Folder</button>
+  <div id="folders-list"></div>
+  <div id="folder-contents"></div>
+
+<script>
+  const fs = window.parent.lunarisShelly?.fs;
+  const foldersList = document.getElementById("folders-list");
+  const folderContents = document.getElementById("folder-contents");
+  const createBtn = document.getElementById("create-folder");
+
+  function renderFolders() {
+    foldersList.innerHTML = "";
+    const nodes = fs.listDir([]);
+    const folders = nodes.filter(n => n.type === "folder");
+    if (folders.length === 0) {
+      foldersList.innerText = "No folders yet.";
+      folderContents.innerHTML = "";
+      return;
+    }
+
+    const ul = document.createElement("ul");
+    folders.forEach(f => {
+      const li = document.createElement("li");
+      li.textContent = f.name;
+      li.onclick = () => renderFolderContents(f.name);
+      ul.appendChild(li);
+    });
+    foldersList.appendChild(ul);
+    folderContents.innerHTML = "";
+  }
+
+  function renderFolderContents(folderName) {
+    const nodes = fs.listDir([folderName]);
+    if (nodes.length === 0) {
+      folderContents.innerHTML = `<p>Folder "${folderName}" is empty.</p>`;
+      return;
+    }
+
+    const ul = document.createElement("ul");
+    nodes.forEach(n => {
+      ul.innerHTML += `<li>${n.type === "folder" ? "[Folder] " : "[File] "}${n.name}</li>`;
+    });
+    folderContents.innerHTML = `<h3>Contents of "${folderName}":</h3>`;
+    folderContents.appendChild(ul);
+  }
+
+  createBtn.onclick = () => {
+    const folderName = prompt("Enter new folder name:");
+    if (!folderName) return alert("Folder name required.");
+    try {
+      fs.mkdir([], folderName);
+      renderFolders();
+    } catch (e) {
+      alert("Error creating folder: " + e.message);
+    }
+  };
+
+  renderFolders();
+</script>
+</body>
+</html>
