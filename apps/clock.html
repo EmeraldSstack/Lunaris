@@ -1,1 +1,27 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Clock</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fff;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 48px;
+      color: #4b0082;
+    }
+  </style>
+</head>
+<body>
+  <div id="time"></div>
+  <script>
+    setInterval(() => {
+      document.getElementById("time").textContent = new Date().toLocaleTimeString();
+    }, 1000);
+  </script>
+</body>
+</html>
