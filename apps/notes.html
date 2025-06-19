@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Notes - Lunaris OS</title>
+<style>
+  body, html {
+    margin: 0; padding: 10px;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background: #fff;
+    color: #333;
+    display: flex; flex-direction: column;
+  }
+  textarea {
+    flex: 1;
+    width: 100%;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+<textarea id="note" placeholder="Start typing your notes..."></textarea>
 
+<script>
+  const textarea = document.getElementById("note");
+
+  // Access the file system exposed globally by Lunaris
+  const fs = window.parent.lunarisShelly?.fs;
+
+  async function loadNote() {
+    try {
+      const content = fs.readFile([], "note.txt");
+      textarea.value = content;
+    } catch {
+      textarea.value = "";
+    }
+  }
+
+  function saveNote() {
+    try {
+      fs.touch([], "note.txt", textarea.value);
+    } catch (e) {
+      // File might already exist; overwrite instead
+      try {
+        fs.writeFile([], "note.txt", textarea.value);
+      } catch {}
+    }
+  }
+
+  textarea.addEventListener("input", () => {
+    saveNote();
+  });
+
+  loadNote();
+</script>
+</body>
+</html>
