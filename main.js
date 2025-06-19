@@ -1,20 +1,22 @@
+import { WindowManager } from './core/WindowManager.js';
+
+const wm = new WindowManager(document.getElementById("window-container"));
+
 const apps = [
   { name: "Clock", file: "apps/clock.html" },
   { name: "Notes", file: "apps/notes.html" },
   { name: "Terminal", file: "apps/terminal.html" }
 ];
 
-// Setup dock icons
 const dock = document.getElementById("dock");
 apps.forEach(app => {
   const icon = document.createElement("div");
   icon.className = "dock-icon";
   icon.innerText = app.name;
-  icon.onclick = () => launchApp(app);
+  icon.onclick = () => wm.launchApp(app);
   dock.appendChild(icon);
 });
 
-// Clock updater
 setInterval(() => {
   const time = new Date().toLocaleTimeString();
   document.getElementById("taskbar-clock").innerText = time;
