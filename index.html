@@ -2,28 +2,28 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lunaris OS</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="boot-screen" class="fade-in">
-    <h1>Lunaris OS</h1>
-    <p>Welcome to the future.</p>
-  </div>
-
-  <div id="desktop" class="hidden">
+  <div id="desktop">
     <div id="taskbar">
-      <span class="logo">🌙</span>
-      <span class="terminal-launch" onclick="openTerminal()">Terminal</span>
+      <div class="logo">🌙 Lunaris</div>
+      <div id="dock"></div>
+      <div id="clock"></div>
     </div>
-    <div id="window-container"></div>
-  </div>
 
-  <div id="terminal" class="terminal hidden">
-    <div class="terminal-header">Shelly</div>
-    <div class="terminal-body" id="terminal-body"></div>
-    <input type="text" id="terminal-input" placeholder="shelly@lunaris:~$" onkeydown="handleShell(event)" />
+    <div id="app-window" class="hidden">
+      <iframe id="app-frame" src=""></iframe>
+      <button id="close-app">×</button>
+    </div>
+
+    <div id="terminal">
+      <div class="header">Shelly Terminal</div>
+      <div id="terminal-output"></div>
+      <input id="terminal-input" placeholder="Type a command..." />
+    </div>
   </div>
 
   <script src="script.js"></script>
