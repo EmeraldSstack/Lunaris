@@ -9,23 +9,12 @@
 <body>
   <div id="desktop">
     <div id="taskbar">
-      <div class="logo">🌙 Lunaris</div>
       <div id="dock"></div>
-      <div id="clock"></div>
+      <div id="taskbar-clock"></div>
     </div>
-
-    <div id="app-window" class="hidden">
-      <iframe id="app-frame" src=""></iframe>
-      <button id="close-app">×</button>
-    </div>
-
-    <div id="terminal">
-      <div class="header">Shelly Terminal</div>
-      <div id="terminal-output"></div>
-      <input id="terminal-input" placeholder="Type a command..." />
-    </div>
+    <div id="window-container"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="main.js" type="module"></script>
 </body>
 </html>
