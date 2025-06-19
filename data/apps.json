@@ -1,1 +1,5 @@
-
+[
+  { "name": "Clock", "file": "apps/clock.html" },
+  { "name": "Notes", "file": "apps/notes.html" },
+  { "name": "Terminal", "file": "apps/terminal.html" }
+]
